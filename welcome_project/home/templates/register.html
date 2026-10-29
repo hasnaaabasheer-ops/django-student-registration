@@ -1,0 +1,81 @@
+<!-- Django Assessment – Student Registration Form
+
+Task
+
+Create a simple Django page where a user can enter their name, email, and course.
+
+Requirements
+
+1. Create a model called "Student" with:
+   
+   - "name" – CharField
+   - "email" – EmailField
+   - "course" – CharField
+
+2. Create a Django "ModelForm" for the "Student" model.
+
+3. Create a page containing the form.
+
+4. When the user submits the form:
+   
+   - Save the data to the database.
+   - Display a message: "Student registered successfully!"
+
+5. Display the list of registered students below the form.
+
+Expected Output
+
+Student Registration
+
+Name: "[____________]"
+
+Email: "[____________]"
+
+Course: "[____________]"
+
+"[ Register ]"
+
+---
+
+Registered Students
+
+- John – john@gmail.com – Python
+- Anu – anu@gmail.com – Django -->
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Registration</title>
+</head>
+
+<body>
+    <h1>Student Registration</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+
+    {% if messages %}
+    <p style="color:green;">{{ messages }}</p>
+    {% endif %}
+    <h2>Registered Students</h2>
+    <ul>
+        {% for student in students %}
+        <li>
+            {{ student.name }} – {{ student.email }} – {{ student.course }}
+            <a href="{% url 'delete_student' student.id %}"
+                onclick="return confirm('Are you sure you want to cancel this registration?');">
+                Cancel
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>
